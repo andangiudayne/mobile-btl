@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
+    <!-- Chế độ Gia đình: tự nhắn tin cho người thân khi chuông reo lâu mà chưa tắt (chỉ khi người dùng bật). -->
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <!-- Đọc giờ bật/tắt màn hình để đo giấc ngủ. Người dùng tự bật trong "Truy cập dữ liệu sử dụng". -->
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
+
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature android:name="android.hardware.sensor.stepcounter" android:required="false" />
+    <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="false" />
+    <uses-feature android:name="android.hardware.telephony" android:required="false" />
+
+    <application
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:label="Challenge Alarm"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.ChallengeAlarm">
+
+        <!-- adjustResize: bàn phím mở thì nội dung co lại phía trên (cùng keyboardPadding()), không bị đẩy lệch. -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- Giữ biểu tượng app: chợp mắt 20 phút, thêm chuông, chúc ngủ ngon, lịch nghỉ. -->
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity>
+
+        <activity
+            android:name=".RingActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:resizeableActivity="false"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.ChallengeAlarm.Ring"
+            android:showOnLockScreen="true"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true" />
+
+        <service
+            android:name=".AlarmService"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback" />
+
+        <!-- Âm thanh ru ngủ (mưa, quạt, ồn trắng) có hẹn giờ, phát cả khi tắt màn hình. -->
+        <service
+            android:name=".NoiseService"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback" />
+
+        <receiver
+            android:name=".AlarmReceiver"
+            android:exported="false" />
+
+        <receiver
+            android:name=".BedtimeReceiver"
+            android:exported="false" />
+
+        <!-- Gia đình: N phút sau khi chuông reo mà chưa tắt thì nhắn SMS cho người thân. -->
+        <receiver
+            android:name=".CheckInReceiver"
+            android:exported="false" />
+
+        <!-- Kiểm tra đã tỉnh: hỏi "Bạn còn thức không?", nhận "Tôi đã dậy", hết hạn thì reo lại. -->
+        <receiver
+            android:name=".WakeCheckReceiver"
+            android:exported="false" />
+
+        <!-- Widget màn hình chính "Chuông kế tiếp" (exported để trình chạy nhận được cập nhật). -->
+        <receiver
+            android:name=".NextAlarmWidget"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/next_alarm_widget_info" />
+        </receiver>
+
+        <!-- Nút "Chợp mắt" trên widget. -->
+        <receiver
+            android:name=".WidgetActionReceiver"
+            android:exported="false" />
+
+        <receiver
+            android:name=".BootReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <!-- Cài bản mới đè lên (kể cả bấm Run trong Android Studio): đặt lại báo thức. -->
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.app.action.SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

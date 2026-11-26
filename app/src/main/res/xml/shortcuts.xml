@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Giữ biểu tượng app để mở nhanh: chợp mắt 20 phút, thêm chuông, chúc ngủ ngon, lịch nghỉ.
+     action phải trùng với AppShortcuts trong MainActivity.kt. -->
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_nap"
+        android:shortcutId="nap"
+        android:shortcutLongLabel="@string/shortcut_nap_long"
+        android:shortcutShortLabel="@string/shortcut_nap_short">
+        <intent
+            android:action="com.nhom.challengealarm.action.NAP"
+            android:targetClass="com.nhom.challengealarm.MainActivity"
+            android:targetPackage="com.nhom.challengealarm" />
+    </shortcut>
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_add"
+        android:shortcutId="add_alarm"
+        android:shortcutLongLabel="@string/shortcut_add_long"
+        android:shortcutShortLabel="@string/shortcut_add_short">
+        <intent
+            android:action="com.nhom.challengealarm.action.ADD_ALARM"
+            android:targetClass="com.nhom.challengealarm.MainActivity"
+            android:targetPackage="com.nhom.challengealarm" />
+    </shortcut>
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_night"
+        android:shortcutId="good_night"
+        android:shortcutLongLabel="@string/shortcut_night_long"
+        android:shortcutShortLabel="@string/shortcut_night_short">
+        <intent
+            android:action="com.nhom.challengealarm.action.GOOD_NIGHT"
+            android:targetClass="com.nhom.challengealarm.MainActivity"
+            android:targetPackage="com.nhom.challengealarm" />
+    </shortcut>
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_days_off"
+        android:shortcutId="days_off"
+        android:shortcutLongLabel="@string/shortcut_days_off_long"
+        android:shortcutShortLabel="@string/shortcut_days_off_short">
+        <intent
+            android:action="com.nhom.challengealarm.action.DAYS_OFF"
+            android:targetClass="com.nhom.challengealarm.MainActivity"
+            android:targetPackage="com.nhom.challengealarm" />
+    </shortcut>
+</shortcuts>

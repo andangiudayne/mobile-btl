@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Widget màn hình chính -->
+    <string name="widget_label">CHUÔNG KẾ TIẾP</string>
+    <string name="widget_loading">Đang tải…</string>
+    <string name="widget_nap">Chợp mắt</string>
+    <string name="widget_description">Chuông kế tiếp, chuỗi ngày dậy đúng giờ và nút chợp mắt 20 phút</string>
+
+    <!-- Lối tắt khi giữ biểu tượng app -->
+    <string name="shortcut_nap_short">Chợp mắt</string>
+    <string name="shortcut_nap_long">Chợp mắt 20 phút</string>
+    <string name="shortcut_add_short">Thêm chuông</string>
+    <string name="shortcut_add_long">Đặt chuông mới</string>
+    <string name="shortcut_night_short">Ngủ ngon</string>
+    <string name="shortcut_night_long">Chúc ngủ ngon</string>
+    <string name="shortcut_days_off_short">Lịch nghỉ</string>
+    <string name="shortcut_days_off_long">Lịch nghỉ lễ, kỳ nghỉ</string>
+</resources>
